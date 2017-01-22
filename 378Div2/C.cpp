@@ -44,6 +44,46 @@ int main()
 		std::cin>>b[i];
 	}
 
+	/*vi sum(n,0);
+	sum[0]=a[0];
+	for(int i=1;i<n;++i)
+		sum[i]=sum[i-1]+a[i];*/
+
+	int i=1;
+	int j=1;
+
+	bool poss=true;
+	while(i<=n && j<=k)
+	{
+		int val=b[j];
+		int summing=0;
+		while(summing<b[j]){
+			summing+=a[i];
+			++i;
+		}
+		std::cout<<summing<<std::endl;
+		if(summing==val)
+			++j;
+		else{
+			poss=false;
+			break;
+		}
+		// ++i;
+	}
+
+	if(!poss)
+	{
+		std::cout<<"NO"<<std::endl;
+		return 0;
+	}
+	else
+	{
+		if(i!=n+1 || j!=k+1)
+			std::cout<<"NO"<<std::endl;
+		else
+			std::cout<<"YES"<<std::endl;
+		return 0;
+	}
 
 	return 0;
 }
