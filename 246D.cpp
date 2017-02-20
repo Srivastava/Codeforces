@@ -7,6 +7,8 @@
 #include <climits>
 #include <numeric>
 #include <queue>
+#include <unordered_map>
+#include <set>
 
 typedef long long ll;
 typedef unsigned long long ull;
@@ -23,61 +25,69 @@ typedef std::vector<pa> vpa;
 
 typedef std::vector<vll> vvll;
 
-// vi topo;
-vb visit;
-vll g[1005];
+vi color;
+int ans[100005];
 
-/*void dfs(int u)
+vb visit;
+
+std::set<int> g[100005];
+
+void dfs(int u)
 {
 	if(visit[u])
 		return;
 	visit[u]=true;
 
+	int k=color[u];
 	for(auto& v:g[u])
 	{
 		if(!visit[v])
+		{
+			if(k!=color[v])
+				ans[k]++;
 			dfs(v);
+		}
+		else
+		{
+			if(k!=color[v])
+				ans[k]++;
+		}
 	}
-	topo.push_back(u);
 	return;
-}*/
-
+}
 int main()
 {
 	int n,m;
 	std::cin>>n>>m;
 
+	color.resize(n+1,0);
+	// ans.resize(n+1,0);
 	visit.resize(n+1,false);
 
-	vi cost(n+1,0);
-
-	vpa p;
+	std::set<int> v;
 	for(int i=1;i<=n;++i)
-		std::cin>>cost[i],p.push_back({cost[i],i});
-
-	std::sort(p.begin(),p.end());
+		std::cin>>color[i],v.insert(color[i]);
 
 	for(int i=0;i<m;++i)
 	{
 		int u,v;
 		std::cin>>u>>v;
-		g[u].push_back(v);
-		g[v].push_back(u);
+
+		if(color[u]!=color[v])
+		{
+			g[color[u]].insert(color[v]);
+			g[color[v]].insert(color[u]);
+		}
+		
 	}
 
-	ll ans=0;
-	for(int i=p.size()-1;i>=0;--i)
+	int ans=0;
+
+	for(auto& c:v)
 	{
-		int u=p[i].second;
-		if(!visit[u])
-		{
-			for(auto& v:g[u]){
-				if(!visit[v])
-					ans+=cost[v];
-			}
-		}
-		visit[u]=true;
+		if(ans==0 || g[c].size()>g[ans].size())
+			ans=c;
 	}
+
 	std::cout<<ans<<std::endl;
-	return 0;
 }

@@ -26,8 +26,7 @@ typedef std::vector<vll> vvll;
 
 int main()
 {
-	int n;
-	std::cin>>n;
+	
 	
 	return 0;
 }
