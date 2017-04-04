@@ -30,7 +30,6 @@ typedef std::vector<ull> vull;
 // 	return std::min(f,s);
 // }
 
-
 int main()
 {
 
