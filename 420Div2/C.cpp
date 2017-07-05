@@ -118,7 +118,7 @@ int main()
 	
 
 
-	std::stack<bool> stk;
+	std::stack<int> stk;
 	bool reorder=false;
 	for(int i=0;i<n*2;++i)
 	{
@@ -131,18 +131,14 @@ int main()
 		{
 			std::cin>>num;
 			
-			if(cnt!=num){
-				stk.push(true);
-			}
-			else
-				stk.push(false);
+			stk.push(num);
 
 		}
 		else
 		{
 			if(!stk.empty())
 			{
-				if(stk.top()==true)
+				if(stk.top()!=cnt)
 				{
 					++res;
 					while(!stk.empty())
